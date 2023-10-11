@@ -1,0 +1,47 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "params": [
+    {
+      "name": "country_select",
+      "value": "World",
+      "bind": {
+        "input": "select",
+        "options": [
+          "World",
+          "United States",
+          "China",
+          "Japan",
+          "Germany",
+          "India",
+          "United Kingdom",
+          "France",
+          "Brazil",
+          "Italy",
+          "Canada"
+        ],
+        "name": "Select Country: "
+      }
+    }
+  ],
+  "data": {"url": "data/gni_per_capita_ordered_2000_2022.csv", "format": {"type": "csv"}},
+  "transform": [
+    {"filter": {"field": "Country Name", "oneOf": ["United States", "China", "Japan", "Germany", "India", "United Kingdom", "France", "Brazil", "Italy", "Canada"]}},
+    {"filter": "datum['Country Name'] == country_select || country_select == 'World'"}
+  ],
+  "width": 685,
+  "height": 400,
+  "mark": {
+    "type": "line",
+    "tooltip": {
+      "content": "data"
+    },
+    "strokeWidth": 3
+  },
+  "encoding": {
+    "x": {"field": "Year", "type": "ordinal", "title": "Year"},
+    "y": {"field": "GNI per Capita", "type": "quantitative", "title": "GNI Per Capita"},
+    "color": {
+      "field": "Country Name", "type": "nominal", "title": "Country"
+    }
+  }
+}
